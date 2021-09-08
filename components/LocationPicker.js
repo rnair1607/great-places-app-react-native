@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Button,
@@ -15,6 +15,17 @@ import MapPreview from "./MapPreview";
 const LocationPicker = (props) => {
   const [pickedLocation, setpickedLocation] = useState();
   const [isFetching, setisFetching] = useState(false);
+
+  const mapPickedLocation = props.navigation.getParam("pickedLocation");
+
+  const { onLocationPicked } = props;
+
+  useEffect(() => {
+    if (mapPickedLocation) {
+      setpickedLocation(mapPickedLocation);
+      onLocationPicked(mapPickedLocation);
+    }
+  }, [mapPickedLocation]);
 
   const verifyPermissions = async () => {
     const result = await Location.requestForegroundPermissionsAsync();
@@ -43,6 +54,10 @@ const LocationPicker = (props) => {
       //   console.log(`currentLocation`, currentLocation);
 
       setpickedLocation({
+        lat: currentLocation.coords.latitude,
+        lng: currentLocation.coords.longitude,
+      });
+      props.onLocationPicked({
         lat: currentLocation.coords.latitude,
         lng: currentLocation.coords.longitude,
       });

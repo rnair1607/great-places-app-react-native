@@ -1,10 +1,9 @@
 import React from "react";
-import { View, StyleSheet, Image } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { TouchableOpacity, Image, StyleSheet } from "react-native";
 
 import ENV from "../env";
 
-function MapPreview(props) {
+const MapPreview = (props) => {
   let imagePreviewUrl;
 
   if (props.location) {
@@ -23,7 +22,7 @@ function MapPreview(props) {
       )}
     </TouchableOpacity>
   );
-}
+};
 
 const styles = StyleSheet.create({
   mapPreview: {
