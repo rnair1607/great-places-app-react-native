@@ -5,7 +5,7 @@ import { Platform } from "react-native";
 import PlacesListScreen from "../screens/PlacesListScreen";
 import PlaceDetailScreen from "../screens/PlaceDetailScreen";
 import NewPlaceScreen from "../screens/NewPlaceScreen";
-import MapScreen from "../screens/NewPlaceScreen";
+import MapScreen from "../screens/MapScreen";
 import Colors from "../contants/Colors";
 
 const PlacesNavigator = createStackNavigator(

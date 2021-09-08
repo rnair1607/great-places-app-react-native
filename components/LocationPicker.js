@@ -10,6 +10,7 @@ import {
 import Colors from "../contants/Colors";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
+import MapPreview from "./MapPreview";
 
 const LocationPicker = (props) => {
   const [pickedLocation, setpickedLocation] = useState();
@@ -39,7 +40,7 @@ const LocationPicker = (props) => {
         timeout: 5000,
       });
 
-      console.log(`currentLocation`, currentLocation);
+      //   console.log(`currentLocation`, currentLocation);
 
       setpickedLocation({
         lat: currentLocation.coords.latitude,
@@ -53,20 +54,36 @@ const LocationPicker = (props) => {
     setisFetching(false);
   };
 
+  const pickOnMapHandler = () => {
+    // console.log("reached");
+    props.navigation.navigate("Map");
+  };
+
   return (
     <View style={styles.locationPicker}>
-      <View style={styles.mapPreview}>
+      <MapPreview
+        onPress={pickOnMapHandler}
+        style={styles.mapPreview}
+        location={pickedLocation}
+      >
         {isFetching ? (
           <ActivityIndicator size="large" color={Colors.primary} />
         ) : (
           <Text>Choose a location</Text>
         )}
+      </MapPreview>
+      <View style={styles.actions}>
+        <Button
+          title="Get User location"
+          color={Colors.primary}
+          onPress={getLocationHandler}
+        />
+        <Button
+          title="Pick location on map"
+          color={Colors.primary}
+          onPress={pickOnMapHandler}
+        />
       </View>
-      <Button
-        title="Get User location"
-        color={Colors.primary}
-        onPress={getLocationHandler}
-      />
     </View>
   );
 };
@@ -81,8 +98,12 @@ const styles = StyleSheet.create({
     height: 150,
     borderColor: "#ccc",
     borderWidth: 1,
-    justifyContent: "center",
-    alignItems: "center",
+  },
+  actions: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    // alignItems: "center",
+    width: "100%",
   },
 });
 
